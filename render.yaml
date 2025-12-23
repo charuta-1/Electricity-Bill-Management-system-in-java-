@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: billing-backend
+    env: java
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: mvn -DskipTests package
+    startCommand: java -jar target/billing-system-1.0.0.jar
+    autoDeploy: true
+    healthCheckPath: /api/auth/validate
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRATION
+        value: "86400000"
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://your-frontend.vercel.app
+      - key: CORS_ALLOWED_ORIGIN_PATTERNS
+        value: https://*.vercel.app
